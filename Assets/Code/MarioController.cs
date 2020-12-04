@@ -49,7 +49,8 @@ public class MarioController : MonoBehaviour , IRestartGameElement
     Vector3 startPosition;
     Quaternion startRotation;
 
-
+    public int bridgeForce;
+    public Rigidbody bridge;
 
     private void Awake()
     {
@@ -234,4 +235,10 @@ public class MarioController : MonoBehaviour , IRestartGameElement
         startPosition = position;
         startRotation = rotation;
     }
+
+    public void OnControllerColliderHit(ControllerColliderHit hit) 
+    {
+        bridge.AddForceAtPosition(-hit.normal * bridgeForce, hit.point);
+    }
+
 }
