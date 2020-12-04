@@ -388,11 +388,13 @@ MonoBehaviour:
   lookAtPlayer: {fileID: 1670739720}
   distance: 4
   horizontalSpeed: 0.5
-  verticalSpeed: 0.5
+  verticalSpeed: 0.3
   invertedX: 1
   invertedY: 0
   minDistance: 3
   maxDistance: 5
+  minPitch: -0.87
+  maxPitch: 0.75
   collisionLayerMask:
     serializedVersion: 2
     m_Bits: 55
