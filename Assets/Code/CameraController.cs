@@ -20,6 +20,9 @@ public class CameraController : MonoBehaviour , IRestartGameElement
     public float minDistance = 3.0f;
     public float maxDistance = 5.0f;
 
+    public float minPitch;
+    public float maxPitch;
+
     public LayerMask collisionLayerMask;
     public float cameraCollisionOffset = 0.1f;
 
@@ -48,6 +51,10 @@ public class CameraController : MonoBehaviour , IRestartGameElement
 
         yaw += horizontalInput * (horizontalSpeed * Mathf.Rad2Deg) * Time.deltaTime * (invertedX ? 1 : -1);
         pitch += verticalInput * (verticalSpeed * Mathf.Rad2Deg) * Time.deltaTime * (invertedY ? 1 : -1);
+
+        print(pitch);
+
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
         Vector3 direction = new Vector3(Mathf.Cos(yaw) * Mathf.Cos(pitch), Mathf.Sin(pitch), Mathf.Sin(yaw) * Mathf.Cos(pitch));
         Vector3 desiredPosition = lookAtPlayer.position - direction * distanceToPlayer;
