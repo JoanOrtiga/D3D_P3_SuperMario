@@ -45,6 +45,8 @@ public class MarioController : MonoBehaviour , IRestartGameElement
     private bool comboTimeStarted = false;
 
 
+    public float m_UpElevatorDot;
+    private GameObject m_CurrentElevator;
     //RESTART
     Vector3 startPosition;
     Quaternion startRotation;
@@ -137,6 +139,7 @@ public class MarioController : MonoBehaviour , IRestartGameElement
         animator.SetFloat("Speed", speed, 0.2f, Time.deltaTime);
 
         UpdateComboTime();
+        UpdateElevator();
     }
 
     public void Step(int side)
@@ -239,6 +242,45 @@ public class MarioController : MonoBehaviour , IRestartGameElement
     public void OnControllerColliderHit(ControllerColliderHit hit) 
     {
         bridge.AddForceAtPosition(-hit.normal * bridgeForce, hit.point);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == ("elevator"))
+        {
+            SetCurrentElevator(other.gameObject);
+
+        }
+    }
+
+    void SetCurrentElevator(GameObject Elevator)
+    {
+        if (isOnElevator(Elevator.transform))
+        {
+            m_CurrentElevator = Elevator;
+            transform.SetParent(Elevator.transform);
+        }
+    }
+
+    bool isOnElevator(Transform ElevatorTransform)
+    {
+        return Vector3.Dot(ElevatorTransform.transform.forward, Vector3.up) > m_UpElevatorDot;
+    }
+    void UpdateElevator()
+    {
+        if (m_CurrentElevator != null)
+        {
+            if (!isOnElevator(m_CurrentElevator.transform))
+            {
+                DetachElevator();
+            }
+        }
+    }
+
+    void DetachElevator()
+    {
+        m_CurrentElevator = null;
+        transform.SetParent(null);
+        transform.rotation = Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f);
     }
 
 }
