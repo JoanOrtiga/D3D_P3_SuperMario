@@ -72,7 +72,9 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public int maxHealth;
     private int currentHealth;
 
-
+    public bool isIdle = true;
+    private float idleTimer;
+    public float timeToIdle = 1.5f;
 
 
     //RESTART
@@ -154,7 +156,26 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         verticalSpeed += Physics.gravity.y * Time.deltaTime;
         movement.y = verticalSpeed * Time.deltaTime;
 
+
         collisionFlags = characterController.Move(movement);
+
+
+
+        if (characterController.velocity == new Vector3(0.0f,0.0f,0.0f))
+        {
+            idleTimer -= Time.deltaTime;
+
+            if(idleTimer <= 0)
+            {
+                isIdle = true;
+            }
+        }
+        else
+        {
+            idleTimer = timeToIdle;
+            isIdle = false;
+        }
+
 
 
         if ((collisionFlags & CollisionFlags.Below) != 0)

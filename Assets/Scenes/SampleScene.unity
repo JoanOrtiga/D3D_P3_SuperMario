@@ -239,6 +239,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &416302218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 416302219}
+  m_Layer: 8
+  m_Name: CameraIdle
+  m_TagString: Untagged
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &416302219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416302218}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.10547876, y: 1.4540005, z: -4.998888}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1791442860}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &563469302 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 7c9fb993626aaf8488be64eb9feadbbc, type: 3}
@@ -469,6 +499,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   cameraCollisionOffset: 0.1
+  cameraIdlePosition: {fileID: 416302219}
 --- !u!1 &1033393030
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,6 +857,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1791442860 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6251194536764130630, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+  m_PrefabInstance: {fileID: 6251194537291027802}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1865906717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1688,6 +1724,10 @@ PrefabInstance:
     - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
       propertyPath: jumpComboTime
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: timeToIdle
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6251194537159081660, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
       propertyPath: m_Height
