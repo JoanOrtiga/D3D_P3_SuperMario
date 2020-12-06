@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MarioController : MonoBehaviour, IRestartGameElement
 {
@@ -27,6 +28,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public KeyCode runKey = KeyCode.LeftShift;
     public KeyCode punchKey = KeyCode.Mouse0;
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode crouchKey = KeyCode.LeftControl;
 
     public float movementSpeed = 7.0f;
     public float jumpSpeedOnKillEnemy = 6.0f;
@@ -43,6 +45,11 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     private CharacterController characterController;
 
     float verticalSpeed;
+
+    [Header("MOVEMENT")]
+    public float walkingSpeed = 0.2f;
+    public float runningSpeed = 1f;
+    public float crouchingSpeed = 0.2f;
 
     [Header("Punch")]
     public GameObject leftPunchCollider;
@@ -101,36 +108,53 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         float speed = 0.0f;
         if (Input.GetKey(leftKey))
         {
-            speed = 0.2f;
+            speed = walkingSpeed;
             movement = -right;
         }
         if (Input.GetKey(rightKey))
         {
-            speed = 0.2f;
+            speed = walkingSpeed;
             movement = right;
         }
         if (Input.GetKey(upKey))
         {
-            speed = 0.2f;
+            speed = walkingSpeed;
             movement = movement + forward;
         }
         if (Input.GetKey(downKey))
         {
-            speed = 0.2f;
+            speed = walkingSpeed;
             movement = movement - forward;
         }
 
         movement.Normalize();
 
-        if (Input.GetKey(runKey) && speed == 0.2f)
-            speed = 1.0f;
+        if (Input.GetKey(runKey) && speed == walkingSpeed)
+            speed = runningSpeed;
 
-        if (Input.GetKeyDown(jumpKey) && onGround)
+        if (Input.GetKey(jumpKey) && onGround)
         {
             verticalSpeed = jumpSpeed;
             UpdateJumpComboState();
         }
 
+        ///
+        if (Input.GetKey(crouchKey) && onGround)
+        {
+            animator.SetBool("Crouch", true);
+        }
+        else if (Input.GetKeyUp(crouchKey))
+        {
+            animator.SetBool("Crouch", false);
+        }
+
+        if (Input.GetKey(crouchKey) && onGround && Input.GetKey(jumpKey))
+        {
+          /*  m_Animator.SetTrigger("Crouch");
+            m_Animator.SetTrigger("LongJump");
+            m_VerticalSpeed = m_LongJumpSpeed;*/
+        }
+        ///
         if (Input.GetKeyDown(punchKey) && animator.GetBool("Punch") == false)
         {
             animator.SetTrigger("Punch");
@@ -156,11 +180,11 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
 
 
-        if (characterController.velocity == new Vector3(0.0f,0.0f,0.0f))
+        if (characterController.velocity == new Vector3(0.0f, 0.0f, 0.0f))
         {
             idleTimer -= Time.deltaTime;
 
-            if(idleTimer <= 0)
+            if (idleTimer <= 0)
             {
                 isIdle = true;
             }
@@ -175,7 +199,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
         if ((collisionFlags & CollisionFlags.Below) != 0)
         {
-            verticalSpeed = 0.0f;
+            verticalSpeed = -Physics.gravity.y * Time.deltaTime;
         }
 
         if (speed == 0)
@@ -200,8 +224,6 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         onGround = (collisionFlags & CollisionFlags.CollidedBelow) != 0;
 
         bool wallSide = (collisionFlags & CollisionFlags.CollidedSides) != 0;
-
-        print(wallSide);
 
         animator.SetBool("Grounded", onGround);
 
@@ -392,6 +414,8 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
     private void Jump(int jumpType)
     {
+        print(jumpType);
+
         switch (jumpType)
         {
             default:
