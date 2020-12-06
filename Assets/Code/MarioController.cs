@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -71,6 +72,11 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     private float idleTimer;
     public float timeToIdle = 1.5f;
 
+    [Header("Sounds")]
+    public AudioClip singleJumpSound;
+    public AudioClip doubleJumpSound;
+    public AudioClip tripleJumpSound;
+    private AudioSource sound;
 
     //RESTART
     Vector3 startPosition;
@@ -83,7 +89,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     {
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-
+        sound = gameObject.GetComponent<AudioSource>();
         SetRestartPoint();
     }
 
@@ -392,8 +398,24 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
     private void Jump(int jumpType)
     {
+        print("s");
         switch (jumpType)
         {
+            case 1:
+                sound.clip = singleJumpSound;
+                sound.Play();
+                break;
+
+            case 2:
+                sound.clip = doubleJumpSound;
+                sound.Play();
+                break;
+
+            case 3:
+                sound.clip = tripleJumpSound;
+                sound.Play();
+                break;
+
             default:
                 break;
         }
