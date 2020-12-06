@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class killer : MonoBehaviour
 {
-    private int damage = 1;
+    private int damage =8;
     public GameManager manager;
     private void OnTriggerEnter(Collider other)
     {

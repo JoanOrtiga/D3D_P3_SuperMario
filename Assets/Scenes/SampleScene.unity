@@ -2304,7 +2304,7 @@ PrefabInstance:
     - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
       propertyPath: singleJumpSound
       value: 
-      objectReference: {fileID: 8300000, guid: ecc2babb82203c34bb0900dae048b538, type: 3}
+      objectReference: {fileID: 8300000, guid: e7a28c373e448494291292ff6c8ce162, type: 3}
     - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
       propertyPath: doubleJumpSound
       value: 
@@ -2313,6 +2313,26 @@ PrefabInstance:
       propertyPath: tripleJumpSound
       value: 
       objectReference: {fileID: 8300000, guid: 3212271e1356c94499ac88bd6691eda8, type: 3}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: step1
+      value: 
+      objectReference: {fileID: 8300000, guid: 5d6aace0379904e4c826b7ff500d22a1, type: 3}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: step2
+      value: 
+      objectReference: {fileID: 8300000, guid: 19b5e7071d852ba48bb6a893e6e7e349, type: 3}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: punch1Sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4cfb898b1747e874ab8d5f6b7848fbd1, type: 3}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: punch2Sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 44e22145751055b499c4f33ff2b8c077, type: 3}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: punch3Sound
+      value: 
+      objectReference: {fileID: 8300000, guid: ea0fe4f3d19e75b4bb61663437376503, type: 3}
     - target: {fileID: 6251194537159081660, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
       propertyPath: m_Height
       value: 1.29
@@ -2357,7 +2377,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.213
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2860,6 +2880,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickUpSounds
       objectReference: {fileID: 0}
+    - target: {fileID: 7767272058336067066, guid: f663982483180f748aee9f10849cc5a3, type: 3}
+      propertyPath: lifeDown
+      value: 
+      objectReference: {fileID: 8300000, guid: 37ca318615d1d1d449067f4a9f4c4198, type: 3}
     - target: {fileID: 7767272058336067067, guid: f663982483180f748aee9f10849cc5a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.629364

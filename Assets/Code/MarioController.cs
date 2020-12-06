@@ -51,7 +51,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public float walkingSpeed = 0.2f;
     public float runningSpeed = 1f;
     public float crouchingSpeed = 0.2f;
-
+    private float speed = 0.0f;
     [Header("Punch")]
     public GameObject leftPunchCollider;
     public GameObject rightPunchCollider;
@@ -83,6 +83,11 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public AudioClip singleJumpSound;
     public AudioClip doubleJumpSound;
     public AudioClip tripleJumpSound;
+    public AudioClip step1;
+    public AudioClip step2;
+    public AudioClip punch1Sound;
+    public AudioClip punch2Sound;
+    public AudioClip punch3Sound;
     private AudioSource sound;
 
     //RESTART
@@ -108,10 +113,9 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         Vector3 forward = cameraController.transform.forward;
         forward.y = 0.0f;
         forward.Normalize();
-
+        speed = 0.0f;
         Vector3 movement = Vector3.zero;
 
-        float speed = 0.0f;
         if (Input.GetKey(leftKey))
         {
             speed = walkingSpeed;
@@ -239,10 +243,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         }
     }
 
-    public void Step(int side)
-    {
-        // Debug.Log(side);
-    }
+   
 
     public void UpdateJumpComboTime()
     {
@@ -418,9 +419,48 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         transform.rotation = Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f);
     }
 
+    private void Step(int side)
+    {
+        if (speed>0.0f)
+        {
+            switch (side)
+            {
+                case -1:
+                    sound.clip = step1;
+                    sound.Play();
+                    break;
+                case 1:
+                    sound.clip = step2;
+                    sound.Play();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+    private void Punch(int punchType)
+    {
+        switch (punchType)
+        {
+            case 1:
+                sound.clip = punch1Sound;
+                sound.Play();
+                break;
+            case 2:
+                sound.clip = punch2Sound;
+                sound.Play();
+                break;
+            case 3:
+                sound.clip = punch3Sound;
+                sound.Play();
+                break;
+            default:
+                break;
+        }
+    }
     private void Jump(int jumpType)
     {
-        print(jumpType);
 
         switch (jumpType)
         {
