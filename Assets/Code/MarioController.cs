@@ -26,10 +26,15 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public KeyCode upKey = KeyCode.W;
     public KeyCode downKey = KeyCode.S;
     public KeyCode rightKey = KeyCode.D;
+
     public KeyCode runKey = KeyCode.LeftShift;
+    public KeyCode runGamePad = KeyCode.JoystickButton8;
     public KeyCode punchKey = KeyCode.Mouse0;
+    public KeyCode punchGamePad = KeyCode.JoystickButton5;
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode jumpGamePad = KeyCode.JoystickButton0;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode crouchGamePad = KeyCode.JoystickButton1;
 
     public float movementSpeed = 7.0f;
     public float jumpSpeedOnKillEnemy = 6.0f;
@@ -69,6 +74,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     [Header("Jump")]
     public float jumpSpeed = 10.0f;
     private bool onGround;
+    public float longJumpSpeed = 4f;
 
     private TJumpCombo currentJump;
     private float currentJumpComboTime = 0.0f;
@@ -107,6 +113,13 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
     private void Update()
     {
+
+      /*  foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(kcode))
+                Debug.Log("KeyCode down: " + kcode);
+        }*/
+
         Vector3 right = cameraController.transform.right;
         right.y = 0.0f;
         right.Normalize();
@@ -116,22 +129,23 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         speed = 0.0f;
         Vector3 movement = Vector3.zero;
 
-        if (Input.GetKey(leftKey))
+        float speed = 0.0f;
+        if (Input.GetKey(leftKey) || Input.GetAxisRaw("MovementJoysticX") < -0.01)
         {
             speed = walkingSpeed;
             movement = -right;
         }
-        if (Input.GetKey(rightKey))
+        if (Input.GetKey(rightKey) || Input.GetAxisRaw("MovementJoysticX") > 0.01)
         {
             speed = walkingSpeed;
             movement = right;
         }
-        if (Input.GetKey(upKey))
+        if (Input.GetKey(upKey) || Input.GetAxisRaw("MovementJoysticY") > 0.01)
         {
             speed = walkingSpeed;
             movement = movement + forward;
         }
-        if (Input.GetKey(downKey))
+        if (Input.GetKey(downKey) || Input.GetAxisRaw("MovementJoysticY") < -0.01)
         {
             speed = walkingSpeed;
             movement = movement - forward;
@@ -139,33 +153,33 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
         movement.Normalize();
 
-        if (Input.GetKey(runKey) && speed == walkingSpeed)
+        if ((Input.GetKey(runKey) || Input.GetKey(runGamePad)) && speed == walkingSpeed)
             speed = runningSpeed;
 
-        if (Input.GetKey(jumpKey) && onGround)
+        if ((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && onGround && !animator.GetBool("Crouch"))
         {
             verticalSpeed = jumpSpeed;
             UpdateJumpComboState();
         }
 
         ///
-        if (Input.GetKey(crouchKey) && onGround)
+        if ((Input.GetKey(crouchKey) || Input.GetKey(crouchGamePad)) && onGround)
         {
             animator.SetBool("Crouch", true);
         }
-        else if (Input.GetKeyUp(crouchKey))
+        else if ((Input.GetKeyUp(crouchKey) || Input.GetKeyUp(crouchGamePad)))
         {
             animator.SetBool("Crouch", false);
         }
 
-        if (Input.GetKey(crouchKey) && onGround && Input.GetKey(jumpKey))
+        if ((Input.GetKey(crouchKey) || Input.GetKey(crouchGamePad)) && onGround && (Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)))
         {
-          /*  m_Animator.SetTrigger("Crouch");
-            m_Animator.SetTrigger("LongJump");
-            m_VerticalSpeed = m_LongJumpSpeed;*/
+            animator.SetBool("Crouch", true);
+            animator.SetTrigger("Jump");
+            verticalSpeed = longJumpSpeed;
         }
-        ///
-        if (Input.GetKeyDown(punchKey) && animator.GetBool("Punch") == false)
+
+        if ((Input.GetKeyDown(punchKey) || Input.GetKeyDown(punchGamePad)) && animator.GetBool("Punch") == false)
         {
             animator.SetTrigger("Punch");
             animator.SetInteger("ComboPunch", CurrentComboPunch());
@@ -461,7 +475,6 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     }
     private void Jump(int jumpType)
     {
-
         switch (jumpType)
         {
             case 1:
@@ -483,4 +496,5 @@ public class MarioController : MonoBehaviour, IRestartGameElement
                 break;
         }
     }
+
 }
