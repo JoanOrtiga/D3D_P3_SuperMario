@@ -38,7 +38,7 @@ public class GoombaAttackState : State<GoombaMachine>
 
             if(entity.timer <= 0)
             {
-                entity.player.GetComponent<MarioController>().LoseHeal(entity.attackDamage);
+                entity.gameManager.LoseLife(entity.attackDamage);
                 entity.timer = entity.attackCooldown;
             }
         }

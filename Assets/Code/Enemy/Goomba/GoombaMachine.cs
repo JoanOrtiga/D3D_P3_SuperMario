@@ -47,6 +47,7 @@ public class GoombaMachine : MonoBehaviour
     [Header("REFERENCES")]
     public MarioController player;
     public Transform eyes;
+    public GameManager gameManager { get; private set; }
 
     //Animation
     public Animator animator { get; private set; }
@@ -63,6 +64,8 @@ public class GoombaMachine : MonoBehaviour
         animator = GetComponent<Animator>();
 
         player = FindObjectOfType<MarioController>();
+
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Start()

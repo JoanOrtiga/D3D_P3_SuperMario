@@ -67,11 +67,6 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public float jumpComboTime = 1f;
 
 
-    [Header("HEALTH")]
-
-    public int maxHealth;
-    private int currentHealth;
-
     public bool isIdle = true;
     private float idleTimer;
     public float timeToIdle = 1.5f;
@@ -136,7 +131,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
             UpdateJumpComboState();
         }
 
-        if (Input.GetKeyDown(punchKey) && animator.GetBool("Punch") == false)
+        if (Input.GetKeyDown(punchKey) || Input.GetButtonDown("") && animator.GetBool("Punch") == false)
         {
             animator.SetTrigger("Punch");
             animator.SetInteger("ComboPunch", CurrentComboPunch());
@@ -336,8 +331,6 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
         startPosition = transform.position;
         startRotation = transform.rotation;
-
-        currentHealth = maxHealth;
     }
 
     public void Restart()
@@ -397,9 +390,12 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         transform.rotation = Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f);
     }
 
-
-    public void LoseHeal(int damage)
+    private void Jump(int jumpType)
     {
-        currentHealth -= damage;
+        switch (jumpType)
+        {
+            default:
+                break;
+        }
     }
 }

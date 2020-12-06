@@ -19,7 +19,7 @@ public interface IHpManager
     void LoseLife(float f);
     event LifeChangefn m_LifeChangeFn;
 }
-public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
+public class GameManager : MonoBehaviour, ICoinsManager, IHpManager
 {
     List<IRestartGameElement> restartGameElements = new List<IRestartGameElement>();
 
@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
 
     public SoundSelector sounds;
 
-    private float hp = 8;
+    public float maxHealth = 8;
+    private float currentHealth = 0;
 
     private int coins = 0;
     private AnimationEvent evt;
@@ -42,7 +43,10 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
     void Start()
     {
         evt = new AnimationEvent();
+
+        currentHealth = maxHealth;
     }
+
     public void AddRestartGameElement(IRestartGameElement restartGameElement)
     {
         restartGameElements.Add(restartGameElement);
@@ -50,6 +54,8 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
 
     public void RestartGame()
     {
+        currentHealth = maxHealth;
+
         foreach (IRestartGameElement item in restartGameElements)
         {
             item.Restart();
@@ -74,31 +80,31 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
     }
     public void HUDIn()
     {
-        
-            HudAnimation.CrossFade(HudInAnimation.name, 0.0f);
-            HudAnimation.Rewind(HudInAnimation.name);
-            HudAnimation.Sample();
-        
-        
-    }
-   
-    
-    public void AddLife(float value)
-    {
-        hp += value;
-        sounds.StarUp();
-        m_LifeChangeFn.Invoke(this);
-        
+
+        HudAnimation.CrossFade(HudInAnimation.name, 0.0f);
+        HudAnimation.Rewind(HudInAnimation.name);
+        HudAnimation.Sample();
+
 
     }
-    
+
+
+    public void AddLife(float value)
+    {
+        currentHealth += value;
+        sounds.StarUp();
+        m_LifeChangeFn.Invoke(this);
+
+
+    }
+
     public float GetLife()
     {
-        return hp; 
+        return currentHealth;
     }
     public void LoseLife(float value)
     {
-        hp-=value;
+        currentHealth -= value;
         sounds.StarDown();
         m_LifeChangeFn.Invoke(this);
 
@@ -106,7 +112,7 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
 
     public void AddCoins(int value)
     {
-        coins+=value;
+        coins += value;
         sounds.Coin();
         m_CoinsChangedFn?.Invoke(this);
     }
