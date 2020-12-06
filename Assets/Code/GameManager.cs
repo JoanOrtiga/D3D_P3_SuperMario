@@ -3,18 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public delegate void CoinsChangedFn(ICoinsManager CoinsManager);
+public interface ICoinsManager
+{
+    void AddCoins(int f);
+    int getCoins();
+    event CoinsChangedFn m_CoinsChangedFn;
+}
+public class GameManager : MonoBehaviour,ICoinsManager
 {
     List<IRestartGameElement> restartGameElements = new List<IRestartGameElement>();
 
     public Animation HudAnimation;
     public AnimationClip HudInAnimation;
+    public event CoinsChangedFn m_CoinsChangedFn;
 
     public Image LifeBar;
     private int Life = 8;
-    private bool AnimationDone = true;
 
+    public Text CoinsText;
+    private int coins = 0;
     private AnimationEvent evt;
+    private void Awake()
+    {
+        DependencyInjector.AddDependency<ICoinsManager>(this);
+    }
     void Start()
     {
         evt = new AnimationEvent();
@@ -57,8 +70,8 @@ public class GameManager : MonoBehaviour
         
         
     }
-        public void Heal()
-        {
+    public void Heal()
+    {
         ++Life;
         ShowLifeBar();
 
@@ -68,6 +81,11 @@ public class GameManager : MonoBehaviour
         --Life;
         ShowLifeBar();
 
+    }
+    public void LoseHeal(int damage)
+    {
+        Life = Life - damage;
+        ShowLifeBar();
     }
     void ShowLifeBar()
     {
@@ -89,7 +107,21 @@ public class GameManager : MonoBehaviour
 
             LifeBar.color = Color.yellow;
         }
-
+        HUDIn();
+    }
+    //public void AddCoin()
+    //{
+    //    ++coins;
+    //    CoinsText.text = coins.ToString();
+    //}
+    public void AddCoins(int value)
+    {
+        coins+=value;
+        m_CoinsChangedFn?.Invoke(this);
+    }
+    public int getCoins()
+    {
+        return coins;
     }
 }
 
