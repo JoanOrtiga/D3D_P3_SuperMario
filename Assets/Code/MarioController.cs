@@ -67,7 +67,10 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public float jumpComboTime = 1f;
 
 
+    [Header("HEALTH")]
 
+    public int maxHealth;
+    private int currentHealth;
 
 
 
@@ -152,6 +155,8 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         movement.y = verticalSpeed * Time.deltaTime;
 
         collisionFlags = characterController.Move(movement);
+
+
         if ((collisionFlags & CollisionFlags.Below) != 0)
         {
             verticalSpeed = 0.0f;
@@ -177,8 +182,6 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     private void GravityUpdate()
     {
         onGround = (collisionFlags & CollisionFlags.CollidedBelow) != 0;
-
-        print(onGround);
 
         if (onGround || ((collisionFlags & CollisionFlags.CollidedAbove) != 0 && verticalSpeed > 0.0f))
         {
@@ -306,6 +309,8 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
         startPosition = transform.position;
         startRotation = transform.rotation;
+
+        currentHealth = maxHealth;
     }
 
     public void Restart()
