@@ -701,11 +701,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44388906fce5ecd4f9e759e96e82343d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistanceToAlert: 5
-  rotateSpeedAlert: 10
-  startRotation: 0
-  minDistanceToAttack: 3
-  maxDistanceToAttack: 7
+  minDistanceToAttack: 1.4
+  maxDistanceToAttack: 1.7
   rotationAttackLerp: 0.05
   attackDamage: 20
   attackCooldown: 1
@@ -742,7 +739,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 200
+  m_AngularSpeed: 260
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

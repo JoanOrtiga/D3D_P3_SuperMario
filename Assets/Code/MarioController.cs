@@ -204,6 +204,12 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     {
         onGround = (collisionFlags & CollisionFlags.CollidedBelow) != 0;
 
+        bool wallSide = (collisionFlags & CollisionFlags.CollidedSides) != 0;
+
+        print(wallSide);
+
+        animator.SetBool("Grounded", onGround);
+
         if (onGround || ((collisionFlags & CollisionFlags.CollidedAbove) != 0 && verticalSpeed > 0.0f))
         {
             verticalSpeed -= 0.0f;
@@ -391,4 +397,9 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         transform.rotation = Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f);
     }
 
+
+    public void LoseHeal(int damage)
+    {
+        currentHealth -= damage;
+    }
 }

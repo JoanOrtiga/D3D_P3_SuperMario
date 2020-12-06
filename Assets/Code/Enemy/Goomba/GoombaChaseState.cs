@@ -28,10 +28,10 @@ public class DroneChaseState : State<GoombaMachine>
             entity.pStateMachine.ChangeState(GoombaPatrolState.Instance);
         }
 
-     /*   if (entity.IsInAttackDistance())
+        if (entity.IsInAttackDistance())
         {
             entity.pStateMachine.ChangeState(GoombaAttackState.Instance);
-        }*/
+        }
     }
 
     public override void Exit(GoombaMachine entity)

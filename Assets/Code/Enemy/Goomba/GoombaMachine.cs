@@ -19,16 +19,11 @@ public class GoombaMachine : MonoBehaviour
 
     public float timer { get; set; }
 
-    [Header("ALERT")]
-    public float maxDistanceToAlert = 5.0f;
-    public float rotateSpeedAlert = 10f;
-    public float startRotation;
-
     [Header("ATTACK")]
     public float minDistanceToAttack = 3.0f;
     public float maxDistanceToAttack = 7.0f;
     public float rotationAttackLerp = 0.05f;
-    public float attackDamage = 20f;
+    public int attackDamage = 1;
     public float attackCooldown = 1f;
 
     [Header("PATROL")]
