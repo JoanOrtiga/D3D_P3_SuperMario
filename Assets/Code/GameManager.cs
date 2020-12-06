@@ -3,18 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public delegate void CoinsChangedFn(ICoinsManager CoinsManager);
+public delegate void LifeChangefn(IHpManager HpManager);
+
+public interface ICoinsManager
+{
+    void AddCoins(int f);
+    int getCoins();
+    event CoinsChangedFn m_CoinsChangedFn;
+}
+public interface IHpManager
+{
+    void AddLife(float f);
+    float getLife();
+    void LoseLife(float f);
+    event LifeChangefn m_LifeChangeFn;
+}
+public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
 {
     List<IRestartGameElement> restartGameElements = new List<IRestartGameElement>();
 
     public Animation HudAnimation;
     public AnimationClip HudInAnimation;
+    public event CoinsChangedFn m_CoinsChangedFn;
+    public event LifeChangefn m_LifeChangeFn;
 
-    public Image LifeBar;
-    private int Life = 8;
-    private bool AnimationDone = true;
+    
+    private float hp = 8;
 
+    public Text CoinsText;
+    private int coins = 0;
     private AnimationEvent evt;
+    private void Awake()
+    {
+        DependencyInjector.AddDependency<IHpManager>(this);
+        DependencyInjector.AddDependency<ICoinsManager>(this);
+    }
     void Start()
     {
         evt = new AnimationEvent();
@@ -44,8 +68,8 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            --Life;
-            ShowLifeBar();
+            //--Life;
+            //ShowLifeBar();
         }
     }
     public void HUDIn()
@@ -57,39 +81,34 @@ public class GameManager : MonoBehaviour
         
         
     }
-        public void Heal()
-        {
-        ++Life;
-        ShowLifeBar();
+   
+    
+    public void AddLife(float value)
+    {
+        hp += value;
+        m_LifeChangeFn.Invoke(this);
+        
 
     }
-    public void LoseHeal()
+    public float getLife()
     {
-        --Life;
-        ShowLifeBar();
+        return hp; 
+    }
+    public void LoseLife(float value)
+    {
+        hp-=value;
+        m_LifeChangeFn.Invoke(this);
 
     }
-    void ShowLifeBar()
+
+    public void AddCoins(int value)
     {
-        float Pct = Life / 8.0f;
-        LifeBar.fillAmount = Pct;
-        if (Life <=2)
-        {
-
-            LifeBar.color = Color.red;
-        }
-        else if (Life >= 6)
-        {
-
-            LifeBar.color = Color.green;
-
-        }
-        else if(Life<6 &&Life>2)
-        {
-
-            LifeBar.color = Color.yellow;
-        }
-
+        coins+=value;
+        m_CoinsChangedFn?.Invoke(this);
+    }
+    public int getCoins()
+    {
+        return coins;
     }
 }
 
