@@ -269,17 +269,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.3646874, y: 0.574297, z: 1.31793}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &247277162 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
-  m_PrefabInstance: {fileID: 270380798}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44388906fce5ecd4f9e759e96e82343d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &270380798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2312,6 +2301,18 @@ PrefabInstance:
       propertyPath: tripleJump
       value: 
       objectReference: {fileID: 8300000, guid: b9a435d346504024ea1b975dc5d636ce, type: 3}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: singleJumpSound
+      value: 
+      objectReference: {fileID: 8300000, guid: ecc2babb82203c34bb0900dae048b538, type: 3}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: doubleJumpSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b9a435d346504024ea1b975dc5d636ce, type: 3}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: tripleJumpSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3212271e1356c94499ac88bd6691eda8, type: 3}
     - target: {fileID: 6251194537159081660, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
       propertyPath: m_Height
       value: 1.29
