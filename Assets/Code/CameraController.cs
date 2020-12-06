@@ -52,8 +52,6 @@ public class CameraController : MonoBehaviour , IRestartGameElement
         yaw += horizontalInput * (horizontalSpeed * Mathf.Rad2Deg) * Time.deltaTime * (invertedX ? 1 : -1);
         pitch += verticalInput * (verticalSpeed * Mathf.Rad2Deg) * Time.deltaTime * (invertedY ? 1 : -1);
 
-        print(pitch);
-
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
         Vector3 direction = new Vector3(Mathf.Cos(yaw) * Mathf.Cos(pitch), Mathf.Sin(pitch), Mathf.Sin(yaw) * Mathf.Cos(pitch));

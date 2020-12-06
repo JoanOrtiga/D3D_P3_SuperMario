@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MarioController : MonoBehaviour , IRestartGameElement
+public class MarioController : MonoBehaviour, IRestartGameElement
 {
     public enum TPunchType
     {
         leftPunch,
         rightPunch,
         kick
+    }
+
+    public enum TJumpCombo
+    {
+        noJump,
+        jump,
+        doubleJump,
+        tripleJump
     }
 
     [Header("Input")]
@@ -21,11 +29,13 @@ public class MarioController : MonoBehaviour , IRestartGameElement
     public KeyCode jumpKey = KeyCode.Space;
 
     public float movementSpeed = 7.0f;
-    public float jumpSpeed = 10.0f;
     public float jumpSpeedOnKillEnemy = 6.0f;
     public float verticalSpeedToKill = 0.0f;
 
     public float lerpRotation = 0.1f;
+
+
+    private CollisionFlags collisionFlags;
 
     Animator animator;
 
@@ -47,6 +57,21 @@ public class MarioController : MonoBehaviour , IRestartGameElement
 
     public float m_UpElevatorDot;
     private GameObject m_CurrentElevator;
+
+    [Header("Jump")]
+    public float jumpSpeed = 10.0f;
+    private bool onGround;
+
+    private TJumpCombo currentJump;
+    private float currentJumpComboTime = 0.0f;
+    public float jumpComboTime = 1f;
+
+
+
+
+
+
+
     //RESTART
     Vector3 startPosition;
     Quaternion startRotation;
@@ -83,7 +108,7 @@ public class MarioController : MonoBehaviour , IRestartGameElement
         {
             speed = 0.2f;
             movement = right;
-        }         
+        }
         if (Input.GetKey(upKey))
         {
             speed = 0.2f;
@@ -100,9 +125,10 @@ public class MarioController : MonoBehaviour , IRestartGameElement
         if (Input.GetKey(runKey) && speed == 0.2f)
             speed = 1.0f;
 
-        if (Input.GetKeyDown(jumpKey))
+        if (Input.GetKeyDown(jumpKey) && onGround)
         {
             verticalSpeed = jumpSpeed;
+            UpdateJumpComboState();
         }
 
         if (Input.GetKeyDown(punchKey) && animator.GetBool("Punch") == false)
@@ -118,15 +144,15 @@ public class MarioController : MonoBehaviour , IRestartGameElement
         {
             desiredRotation = Quaternion.LookRotation(movement);
         }
-        
+
 
         movement = movement * Time.deltaTime * movementSpeed * speed;
 
         verticalSpeed += Physics.gravity.y * Time.deltaTime;
         movement.y = verticalSpeed * Time.deltaTime;
 
-        CollisionFlags collisionFlags = characterController.Move(movement);
-        if((collisionFlags & CollisionFlags.Below) != 0)
+        collisionFlags = characterController.Move(movement);
+        if ((collisionFlags & CollisionFlags.Below) != 0)
         {
             verticalSpeed = 0.0f;
         }
@@ -139,19 +165,76 @@ public class MarioController : MonoBehaviour , IRestartGameElement
         animator.SetFloat("Speed", speed, 0.2f, Time.deltaTime);
 
         UpdateComboTime();
+
+        if (onGround)
+            UpdateJumpComboTime();
+
         UpdateElevator();
+
+        GravityUpdate();
+    }
+
+    private void GravityUpdate()
+    {
+        onGround = (collisionFlags & CollisionFlags.CollidedBelow) != 0;
+
+        print(onGround);
+
+        if (onGround || ((collisionFlags & CollisionFlags.CollidedAbove) != 0 && verticalSpeed > 0.0f))
+        {
+            verticalSpeed -= 0.0f;
+        }
     }
 
     public void Step(int side)
     {
-       // Debug.Log(side);
+        // Debug.Log(side);
+    }
+
+    public void UpdateJumpComboTime()
+    {
+        currentJumpComboTime -= Time.deltaTime;
+
+        if (currentJumpComboTime < 0)
+        {
+            currentJump = TJumpCombo.noJump;
+        }
+    }
+
+    public void UpdateJumpComboState()
+    {
+
+        switch (currentJump)
+        {
+            case TJumpCombo.noJump:
+                currentJump = TJumpCombo.jump;
+                currentJumpComboTime = jumpComboTime;
+                break;
+            case TJumpCombo.jump:
+                currentJump = TJumpCombo.doubleJump;
+                currentJumpComboTime = jumpComboTime;
+                break;
+            case TJumpCombo.doubleJump:
+                currentJump = TJumpCombo.tripleJump;
+                currentJumpComboTime = jumpComboTime;
+                break;
+            case TJumpCombo.tripleJump:
+                currentJump = TJumpCombo.jump;
+                currentJumpComboTime = jumpComboTime;
+                break;
+            default:
+                break;
+        }
+
+        animator.SetTrigger("Jump");
+        animator.SetInteger("JumpState", (int)currentJump);
     }
 
     public void UpdatePunch(TPunchType punchType, bool enabled)
     {
         GameObject punchCollider = null;
 
-        if(punchType == TPunchType.leftPunch)
+        if (punchType == TPunchType.leftPunch)
         {
             punchCollider = leftPunchCollider;
         }
@@ -174,10 +257,10 @@ public class MarioController : MonoBehaviour , IRestartGameElement
 
     void UpdateComboTime()
     {
-        if(currentComboTime > 0.0f && comboTimeStarted)
+        if (currentComboTime > 0.0f && comboTimeStarted)
         {
             currentComboTime -= Time.deltaTime;
-            if(currentComboTime <= 0.0f)
+            if (currentComboTime <= 0.0f)
             {
                 comboTimeStarted = false;
             }
@@ -186,7 +269,7 @@ public class MarioController : MonoBehaviour , IRestartGameElement
 
     int CurrentComboPunch()
     {
-        if(currentComboTime <= 0.0f)
+        if (currentComboTime <= 0.0f)
         {
             currentPunch = 1;
 
@@ -197,7 +280,7 @@ public class MarioController : MonoBehaviour , IRestartGameElement
             int currentCombo = currentPunch;
             ++currentPunch;
 
-            if(currentPunch >= 3)
+            if (currentPunch >= 3)
             {
                 currentPunch = 0;
             }
@@ -239,7 +322,7 @@ public class MarioController : MonoBehaviour , IRestartGameElement
         startRotation = rotation;
     }
 
-    public void OnControllerColliderHit(ControllerColliderHit hit) 
+    public void OnControllerColliderHit(ControllerColliderHit hit)
     {
         bridge.AddForceAtPosition(-hit.normal * bridgeForce, hit.point);
     }
@@ -248,7 +331,6 @@ public class MarioController : MonoBehaviour , IRestartGameElement
         if (other.tag == ("elevator"))
         {
             SetCurrentElevator(other.gameObject);
-
         }
     }
 
