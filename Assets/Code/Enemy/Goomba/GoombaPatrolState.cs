@@ -33,9 +33,9 @@ public class GoombaPatrolState : State<GoombaMachine>
 
         if (entity.SeesPlayer())
         {
-          /*  if (entity.IsInAttackDistance())
+            if (entity.IsInAttackDistance())
                 entity.pStateMachine.ChangeState(GoombaAttackState.Instance);
-            else*/
+            else
                 entity.pStateMachine.ChangeState(DroneChaseState.Instance);
         }
     }

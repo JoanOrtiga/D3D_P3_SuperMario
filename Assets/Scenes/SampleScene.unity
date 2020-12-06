@@ -269,6 +269,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.3646874, y: 0.574297, z: 1.31793}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &247277162 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+  m_PrefabInstance: {fileID: 270380798}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44388906fce5ecd4f9e759e96e82343d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &270380798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -276,6 +287,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 805247868}
     m_Modifications:
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: attackDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: coneAngle
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: rotationAttackLerp
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817439, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 350
+      objectReference: {fileID: 0}
     - target: {fileID: 2443220539625590242, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
       propertyPath: m_Name
       value: GoombaEnemy
@@ -2244,6 +2271,10 @@ PrefabInstance:
     - target: {fileID: 6251194536764627110, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
+      propertyPath: newVideo.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6251194537159081657, guid: 1a9d93de023f96e4eaf8a06631a625f1, type: 3}
       propertyPath: cameraController

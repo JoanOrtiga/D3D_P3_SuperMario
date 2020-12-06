@@ -81,7 +81,6 @@ public class GoombaMachine : MonoBehaviour
 
     private void Update()
     {
-        print(stateMachine.CurrentState());
         stateMachine.UpdateMachine();
     }
 
