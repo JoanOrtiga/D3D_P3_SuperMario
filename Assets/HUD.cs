@@ -21,34 +21,34 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void UpdateCoins(ICoinsManager coinsManager)
     {
-        if (coinsManager.getCoins() < 10)
+        if (coinsManager.GetCoins() < 10)
         {
-            coinsText.text = "0"+coinsManager.getCoins().ToString();
+            coinsText.text = "0"+coinsManager.GetCoins().ToString();
 
         }
         else
         {
-            coinsText.text = coinsManager.getCoins().ToString();
+            coinsText.text = coinsManager.GetCoins().ToString();
 
         }
     }
     void UpdateHp(IHpManager hpManager)
     {
       
-            float Pct = Manager.getLife() / 8.0f;
+            float Pct = Manager.GetLife() / 8.0f;
             LifeBar.fillAmount = Pct;
-            if (Manager.getLife() <= 2)
+            if (Manager.GetLife() <= 2)
             {
 
                 LifeBar.color = Color.red;
             }
-            else if (Manager.getLife() >= 6)
+            else if (Manager.GetLife() >= 6)
             {
 
                 LifeBar.color = Color.green;
 
             }
-            else if (Manager.getLife() < 6 && Manager.getLife() > 2)
+            else if (Manager.GetLife() < 6 && Manager.GetLife() > 2)
             {
 
                 LifeBar.color = Color.yellow;

@@ -12,7 +12,7 @@ public class LifeScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             
-            if(Manager.getLife() < maxHP)
+            if(Manager.GetLife() < maxHP)
             {
                 Manager.AddLife(1);
                 Destroy(gameObject);

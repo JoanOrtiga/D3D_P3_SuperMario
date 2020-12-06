@@ -9,13 +9,13 @@ public delegate void LifeChangefn(IHpManager HpManager);
 public interface ICoinsManager
 {
     void AddCoins(int f);
-    int getCoins();
+    int GetCoins();
     event CoinsChangedFn m_CoinsChangedFn;
 }
 public interface IHpManager
 {
     void AddLife(float f);
-    float getLife();
+    float GetLife();
     void LoseLife(float f);
     event LifeChangefn m_LifeChangeFn;
 }
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
 
     }
     
-    public float getLife()
+    public float GetLife()
     {
         return hp; 
     }
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
         sounds.Coin();
         m_CoinsChangedFn?.Invoke(this);
     }
-    public int getCoins()
+    public int GetCoins()
     {
         return coins;
     }
