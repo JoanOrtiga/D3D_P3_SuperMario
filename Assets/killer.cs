@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class killer : MonoBehaviour
 {
-    private int damage = 10;
+    private int damage = 1;
     public GameManager manager;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            manager.LoseLife(10);
+            manager.LoseLife(damage);
         }
     }
 }

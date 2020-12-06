@@ -28,10 +28,10 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
     public event CoinsChangedFn m_CoinsChangedFn;
     public event LifeChangefn m_LifeChangeFn;
 
-    
+    public SoundSelector sounds;
+
     private float hp = 8;
 
-    public Text CoinsText;
     private int coins = 0;
     private AnimationEvent evt;
     private void Awake()
@@ -86,10 +86,12 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
     public void AddLife(float value)
     {
         hp += value;
+        sounds.StarUp();
         m_LifeChangeFn.Invoke(this);
         
 
     }
+    
     public float getLife()
     {
         return hp; 
@@ -97,6 +99,7 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
     public void LoseLife(float value)
     {
         hp-=value;
+        sounds.StarDown();
         m_LifeChangeFn.Invoke(this);
 
     }
@@ -104,6 +107,7 @@ public class GameManager : MonoBehaviour,ICoinsManager,IHpManager
     public void AddCoins(int value)
     {
         coins+=value;
+        sounds.Coin();
         m_CoinsChangedFn?.Invoke(this);
     }
     public int getCoins()
