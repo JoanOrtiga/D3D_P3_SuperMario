@@ -131,7 +131,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
             UpdateJumpComboState();
         }
 
-        if (Input.GetKeyDown(punchKey) || Input.GetButtonDown("") && animator.GetBool("Punch") == false)
+        if (Input.GetKeyDown(punchKey) && animator.GetBool("Punch") == false)
         {
             animator.SetTrigger("Punch");
             animator.SetInteger("ComboPunch", CurrentComboPunch());
