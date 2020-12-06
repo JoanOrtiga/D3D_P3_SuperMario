@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour , IRestartGameElement
 {
     public Transform lookAtPlayer;
+    private MarioController marioController;
 
     float yaw = 0.0f;
     float pitch = 0.0f;
@@ -26,6 +27,8 @@ public class CameraController : MonoBehaviour , IRestartGameElement
     public LayerMask collisionLayerMask;
     public float cameraCollisionOffset = 0.1f;
 
+    public Transform cameraIdlePosition;
+
     //RESET
     Vector3 startPosition;
     Quaternion startRotation;
@@ -33,6 +36,8 @@ public class CameraController : MonoBehaviour , IRestartGameElement
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        marioController = lookAtPlayer.GetComponentInParent<MarioController>();
     }
 
     private void Update()
@@ -66,7 +71,17 @@ public class CameraController : MonoBehaviour , IRestartGameElement
             desiredPosition = raycastHit.point + direction * cameraCollisionOffset;
         }
 
-        transform.position = desiredPosition;
+        if (marioController.isIdle)
+        {
+            transform.position = Vector3.Lerp(transform.position, cameraIdlePosition.position, 0.05f);
+            desiredPosition = transform.position;
+            yaw = 0;
+            pitch = 0; 
+        }
+        else
+        {
+            transform.position = desiredPosition;
+        }
 
         transform.LookAt(lookAt);
     }

@@ -67,9 +67,14 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public float jumpComboTime = 1f;
 
 
+    [Header("HEALTH")]
 
+    public int maxHealth;
+    private int currentHealth;
 
-
+    public bool isIdle = true;
+    private float idleTimer;
+    public float timeToIdle = 1.5f;
 
 
     //RESTART
@@ -151,7 +156,28 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         verticalSpeed += Physics.gravity.y * Time.deltaTime;
         movement.y = verticalSpeed * Time.deltaTime;
 
+
         collisionFlags = characterController.Move(movement);
+
+
+
+        if (characterController.velocity == new Vector3(0.0f,0.0f,0.0f))
+        {
+            idleTimer -= Time.deltaTime;
+
+            if(idleTimer <= 0)
+            {
+                isIdle = true;
+            }
+        }
+        else
+        {
+            idleTimer = timeToIdle;
+            isIdle = false;
+        }
+
+
+
         if ((collisionFlags & CollisionFlags.Below) != 0)
         {
             verticalSpeed = 0.0f;
@@ -178,7 +204,11 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     {
         onGround = (collisionFlags & CollisionFlags.CollidedBelow) != 0;
 
-        print(onGround);
+        bool wallSide = (collisionFlags & CollisionFlags.CollidedSides) != 0;
+
+        print(wallSide);
+
+        animator.SetBool("Grounded", onGround);
 
         if (onGround || ((collisionFlags & CollisionFlags.CollidedAbove) != 0 && verticalSpeed > 0.0f))
         {
@@ -306,6 +336,8 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
         startPosition = transform.position;
         startRotation = transform.rotation;
+
+        currentHealth = maxHealth;
     }
 
     public void Restart()
@@ -364,5 +396,10 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         transform.SetParent(null);
         transform.rotation = Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f);
     }
-    
+
+
+    public void LoseHeal(int damage)
+    {
+        currentHealth -= damage;
+    }
 }
