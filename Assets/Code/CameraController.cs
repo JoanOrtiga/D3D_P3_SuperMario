@@ -51,8 +51,8 @@ public class CameraController : MonoBehaviour , IRestartGameElement
         directionToPlayer.Normalize();
         yaw = Mathf.Atan2(directionToPlayer.z, directionToPlayer.x);
 
-        float horizontalInput = Input.GetAxis("Mouse X");
-        float verticalInput = Input.GetAxis("Mouse Y");
+        float horizontalInput = Input.GetAxis("Mouse X") + Input.GetAxis("CameraJoystickX");
+        float verticalInput = Input.GetAxis("Mouse Y") + Input.GetAxis("CameraJoystickY");
 
         yaw += horizontalInput * (horizontalSpeed * Mathf.Rad2Deg) * Time.deltaTime * (invertedX ? 1 : -1);
         pitch += verticalInput * (verticalSpeed * Mathf.Rad2Deg) * Time.deltaTime * (invertedY ? 1 : -1);

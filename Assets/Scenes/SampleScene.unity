@@ -394,6 +394,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerStar (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 045d660ceaf297e45bc223a93976ba08, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 045d660ceaf297e45bc223a93976ba08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.189384
@@ -653,6 +657,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerStar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 045d660ceaf297e45bc223a93976ba08, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 045d660ceaf297e45bc223a93976ba08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17.043419
@@ -842,7 +850,7 @@ MonoBehaviour:
   maxPitch: 0.75
   collisionLayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 51
   cameraCollisionOffset: 0.1
   cameraIdlePosition: {fileID: 2138043995}
 --- !u!1001 &1062917769
@@ -859,6 +867,10 @@ PrefabInstance:
     - target: {fileID: 3103415738085027059, guid: 25fa45a346a81bc4dbfe8063c9bb982a, type: 3}
       propertyPath: m_Name
       value: Coin (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103415738085027059, guid: 25fa45a346a81bc4dbfe8063c9bb982a, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3103415738085257427, guid: 25fa45a346a81bc4dbfe8063c9bb982a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -921,6 +933,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 045d660ceaf297e45bc223a93976ba08, type: 3}
       propertyPath: m_Name
       value: PowerStar
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 045d660ceaf297e45bc223a93976ba08, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 045d660ceaf297e45bc223a93976ba08, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1079,6 +1095,10 @@ PrefabInstance:
     - target: {fileID: 3103415738085027059, guid: 25fa45a346a81bc4dbfe8063c9bb982a, type: 3}
       propertyPath: m_Name
       value: Coin (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103415738085027059, guid: 25fa45a346a81bc4dbfe8063c9bb982a, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3103415738085257427, guid: 25fa45a346a81bc4dbfe8063c9bb982a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1547,6 +1567,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerStar (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 045d660ceaf297e45bc223a93976ba08, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 045d660ceaf297e45bc223a93976ba08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.189384
@@ -1682,6 +1706,10 @@ PrefabInstance:
     - target: {fileID: 3103415738085027059, guid: 25fa45a346a81bc4dbfe8063c9bb982a, type: 3}
       propertyPath: m_Name
       value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103415738085027059, guid: 25fa45a346a81bc4dbfe8063c9bb982a, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3103415738085257427, guid: 25fa45a346a81bc4dbfe8063c9bb982a, type: 3}
       propertyPath: m_LocalPosition.x
