@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 3833ed5895951564f98f4e0ff9deac27, type: 2}
 --- !u!114 &35177298 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7555592891990493138, guid: 3573d67dcdf308347afd7a710de2174c, type: 3}
@@ -144,6 +144,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: acc36eee311f0dd428f5959c5f4b3d97, type: 3}
       propertyPath: m_Name
       value: MarioMapa
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: acc36eee311f0dd428f5959c5f4b3d97, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: acc36eee311f0dd428f5959c5f4b3d97, type: 3}
       propertyPath: m_LocalPosition.x
