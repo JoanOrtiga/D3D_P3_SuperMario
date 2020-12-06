@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class killer : MonoBehaviour
+public class LifeScript : MonoBehaviour
 {
-    private int damage = 10;
-    public GameManager manager;
+    public GameManager Manager;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            manager.LoseLife(10);
+            Manager.AddLife(1);
+            Destroy(gameObject);
         }
     }
 }
