@@ -109,6 +109,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         characterController = GetComponent<CharacterController>();
         sound = gameObject.GetComponent<AudioSource>();
         SetRestartPoint();
+        speed = 0.0f;
     }
 
     private void Update()
@@ -129,7 +130,6 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         speed = 0.0f;
         Vector3 movement = Vector3.zero;
 
-        float speed = 0.0f;
         if (Input.GetKey(leftKey) || Input.GetAxisRaw("MovementJoysticX") < -0.01)
         {
             speed = walkingSpeed;
