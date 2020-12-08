@@ -130,21 +130,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 411116, guid: 3c0aeb65d446e94428b8d91fd98eb03d, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 411121, guid: 3c0aeb65d446e94428b8d91fd98eb03d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 411121, guid: 3c0aeb65d446e94428b8d91fd98eb03d, type: 3}
+      propertyPath: numBounces
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 8188141800474805587, guid: 3c0aeb65d446e94428b8d91fd98eb03d, type: 3}
       propertyPath: m_Name
       value: Shell
       objectReference: {fileID: 0}
     - target: {fileID: 8856837986481102825, guid: 3c0aeb65d446e94428b8d91fd98eb03d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.49
+      value: 7.11
       objectReference: {fileID: 0}
     - target: {fileID: 8856837986481102825, guid: 3c0aeb65d446e94428b8d91fd98eb03d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.368
+      value: 15.88
       objectReference: {fileID: 0}
     - target: {fileID: 8856837986481102825, guid: 3c0aeb65d446e94428b8d91fd98eb03d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -29.34
+      value: -7.78
       objectReference: {fileID: 0}
     - target: {fileID: 8856837986481102825, guid: 3c0aeb65d446e94428b8d91fd98eb03d, type: 3}
       propertyPath: m_LocalRotation.x
