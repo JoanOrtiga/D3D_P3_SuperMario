@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour , IRestartGameElement
 {
+    [Header("INVERTS")]
+    public bool invertedX;
+    public bool invertedY;
+    
+    [Header("REFERENCES")]
     public Transform lookAtPlayer;
     private MarioController marioController;
 
@@ -12,18 +17,19 @@ public class CameraController : MonoBehaviour , IRestartGameElement
 
     public float distance = 8.0f;
 
+    [Header("SENSIBILITY")]
     public float horizontalSpeed = 0.0f;
     public float verticalSpeed = 0.0f;
 
-    public bool invertedX;
-    public bool invertedY;
-
+    [Header("MINMAX DISTANCE")]
     public float minDistance = 3.0f;
     public float maxDistance = 5.0f;
 
+    [Header("RANGE")]
     public float minPitch;
     public float maxPitch;
 
+    [Header("COLLISION")]
     public LayerMask collisionLayerMask;
     public float cameraCollisionOffset = 0.1f;
 

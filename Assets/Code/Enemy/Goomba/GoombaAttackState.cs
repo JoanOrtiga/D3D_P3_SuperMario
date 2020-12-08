@@ -21,11 +21,11 @@ public class GoombaAttackState : State<GoombaMachine>
     {
         //DamagePlayer
 
-  /*      var lookPos = entity.player.transform.position - entity.transform.position;
-        lookPos.y = 0;
-        var rotation = Quaternion.LookRotation(lookPos);
-        entity.transform.rotation = Quaternion.Slerp(entity.transform.rotation, rotation, entity.rotationAttackLerp);*/
-        
+        /*      var lookPos = entity.player.transform.position - entity.transform.position;
+              lookPos.y = 0;
+              var rotation = Quaternion.LookRotation(lookPos);
+              entity.transform.rotation = Quaternion.Slerp(entity.transform.rotation, rotation, entity.rotationAttackLerp);*/
+
         entity.timer -= Time.deltaTime;
 
 
@@ -36,11 +36,9 @@ public class GoombaAttackState : State<GoombaMachine>
                 entity.pStateMachine.ChangeState(GoombaChaseState.Instance);
             }
 
-            if(entity.timer <= 0)
+            if (entity.timer <= 0)
             {
-                entity.gameManager.LoseLife(entity.attackDamage);
-
-                entity.player.HitAnimation(entity.gameManager.GetLife(), entity.transform.forward);
+                entity.player.LoseHP(entity.attackDamage, entity.transform.forward);
                 entity.timer = entity.attackCooldown;
             }
         }

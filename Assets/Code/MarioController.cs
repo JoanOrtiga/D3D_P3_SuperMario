@@ -49,6 +49,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
     public CameraController cameraController;
     private CharacterController characterController;
+    private GameManager gameManager;
 
     float verticalSpeed;
 
@@ -128,6 +129,8 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         sound = gameObject.GetComponent<AudioSource>();
         SetRestartPoint();
         speed = 0.0f;
+
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
@@ -611,9 +614,11 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         }
     }
 
-    public void HitAnimation(float currentHealth, Vector3 forward)
+    public void LoseHP(int damage, Vector3 forward)
     {
-        if (currentHealth <= 0)
+        gameManager.LoseLife(damage);
+
+        if (gameManager.GetLife() <= 0)
         {
             animator.SetTrigger("Die");
             characterController.enabled = false;

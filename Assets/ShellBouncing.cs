@@ -40,8 +40,7 @@ public class ShellBouncing : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
-            gameManager.LoseLife(1);
-            collision.gameObject.GetComponent<MarioController>().HitAnimation(gameManager.GetLife(), transform.forward);
+            collision.gameObject.GetComponent<MarioController>().LoseHP(1, transform.forward);
         }
 
         for (int i = 0; i < collision.contactCount; i++)

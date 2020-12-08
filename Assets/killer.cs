@@ -6,12 +6,13 @@ public class killer : MonoBehaviour
 {
     private int damage =8;
     public GameManager manager;
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            manager.LoseLife(damage);
-            other.GetComponent<MarioController>().HitAnimation(manager.GetLife(), transform.forward);
+            other.GetComponent<MarioController>().LoseHP(damage, transform.forward);
         }
     }
 }
