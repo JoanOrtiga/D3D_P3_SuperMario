@@ -79,6 +79,13 @@ public class CameraController : MonoBehaviour , IRestartGameElement
             desiredPosition = raycastHit.point + direction * cameraCollisionOffset;
         }
 
+        if(horizontalInput != 0 && verticalInput != 0)
+        {
+            marioController.idleTimer = marioController.timeToIdle;
+            marioController.isIdle = false;
+        }
+
+
         if (marioController.isIdle)
         {
             transform.position = Vector3.Lerp(transform.position, cameraIdlePosition.position, 0.05f);

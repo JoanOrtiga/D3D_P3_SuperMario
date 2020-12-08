@@ -60,6 +60,8 @@ public class GoombaMachine : MonoBehaviour , IRestartGameElement
     private Vector3 startPosition;
     private Quaternion startRotation;
 
+    public GameObject drop;
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();

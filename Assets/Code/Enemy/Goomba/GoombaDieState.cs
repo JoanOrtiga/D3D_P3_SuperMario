@@ -47,6 +47,8 @@ public class GoombaDieState : State<GoombaMachine>
 
         if (entity.goombaRenderer[0].material.color.a <= 0)
         {
+            GameObject.Instantiate(entity.drop, entity.transform.position, entity.transform.rotation);
+
             entity.gameObject.SetActive(false);
         }
     }

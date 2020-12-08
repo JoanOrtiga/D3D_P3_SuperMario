@@ -92,7 +92,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
     [Header("IDLE")]
     public bool isIdle = true;
-    private float idleTimer;
+    [HideInInspector] public float idleTimer;
     public float timeToIdle = 1.5f;
     private Vector3 lastPosition;
 

@@ -16,8 +16,10 @@ public class ShellBouncing : MonoBehaviour
 
     private void OnEnable()
     {
+
         rb = GetComponent<Rigidbody>();
         gameManager = FindObjectOfType<GameManager>();
+
     }
 
     private void FixedUpdate()
@@ -55,7 +57,7 @@ public class ShellBouncing : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     private void Bounce(ContactPoint contact)
