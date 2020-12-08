@@ -122,6 +122,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         characterController = GetComponent<CharacterController>();
         sound = gameObject.GetComponent<AudioSource>();
         SetRestartPoint();
+        speed = 0.0f;
     }
 
     private void Update()
