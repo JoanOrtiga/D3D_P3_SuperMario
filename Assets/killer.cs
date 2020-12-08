@@ -11,6 +11,7 @@ public class killer : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             manager.LoseLife(damage);
+            other.GetComponent<MarioController>().HitAnimation(manager.GetLife(), transform.forward);
         }
     }
 }

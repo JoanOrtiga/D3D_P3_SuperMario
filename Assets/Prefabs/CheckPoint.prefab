@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6921232531246324552}
   - component: {fileID: 6921232531246324555}
   - component: {fileID: 6115691678437894212}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CheckPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6921232532365207183}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: StartPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
