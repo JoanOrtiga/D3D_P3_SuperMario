@@ -35,7 +35,7 @@ public class GoombaDieState : State<GoombaMachine>
 
     public override void Exit(GoombaMachine entity)
     {
-        Debug.Log("Adeu");
+
     }
 
     private void FadeOut(GoombaMachine entity, float graphValue)

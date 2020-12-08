@@ -79,8 +79,9 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     private bool onWall;
     private float onWallTimer = 0.0f;
     private float onWallMaxTime = 0.1f;
-    private float wallJumpCoolDown = 0.3f;
-    private float wallJumpTimer = 0.0f;
+    private bool wallJumpEnabled = true;
+    private float fallingTime = 0.3f;
+    private float fallingTimer = 0.0f;
 
     private TJumpCombo currentJump;
     private float currentJumpComboTime = 0.0f;
@@ -176,7 +177,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         if ((Input.GetKey(runKey) || Input.GetKey(runGamePad)) && speed == walkingSpeed)
             speed = runningSpeed;
 
-        if (((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && (onGround && !animator.GetBool("Crouch"))) || onEnemy)
+        if (((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && onGround && !animator.GetBool("Crouch")) || onEnemy)
         {
             onEnemy = false;
 
@@ -254,12 +255,12 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
             onWallTimer -= Time.deltaTime;
 
-            if ((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && wallJumpTimer <= 0.0f)
+            if ((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && wallJumpEnabled == true)
             {
                 verticalSpeed = jumpSpeed;
                 UpdateJumpComboState();
 
-                wallJumpTimer = wallJumpCoolDown;
+                wallJumpEnabled = false;
             }
         }
 
@@ -274,7 +275,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
             animator.SetBool("onWall", false);
         }
 
-        wallJumpTimer -= Time.deltaTime;
+
 
         if (speed == 0)
             desiredRotation = transform.rotation;
@@ -286,7 +287,21 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         UpdateComboTime();
 
         if (onGround)
+        {
             UpdateJumpComboTime();
+            wallJumpEnabled = true;
+            fallingTimer = fallingTime;
+            animator.ResetTrigger("Falling");
+        }
+        else
+        {
+            fallingTimer -= Time.deltaTime;
+
+            if(fallingTimer<= 0.0f)
+            {
+                animator.SetTrigger("Falling");
+            }
+        }
 
         UpdateElevator();
 
@@ -303,7 +318,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
         if (onGround || ((collisionFlags & CollisionFlags.CollidedAbove) != 0 && verticalSpeed > 0.0f))
         {
-            verticalSpeed -= 0.0f;
+            verticalSpeed = -Physics.gravity.y * Time.deltaTime;
         }
     }
 
