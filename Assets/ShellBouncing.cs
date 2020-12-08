@@ -14,7 +14,7 @@ public class ShellBouncing : MonoBehaviour
 
     public float speed = 15.0f;
 
-    private void Start()
+    private void OnEnable()
     {
         rb = GetComponent<Rigidbody>();
         gameManager = FindObjectOfType<GameManager>();
@@ -34,45 +34,37 @@ public class ShellBouncing : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (this.enabled)
         {
-            collision.gameObject.GetComponent<GoombaMachine>().RecieveDamage(1);
-        }
-        else if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<MarioController>().LoseHP(1, transform.forward);
-        }
-
-        for (int i = 0; i < collision.contactCount; i++)
-        {
-            ContactPoint contact = collision.GetContact(i);
-
-            if (contact.normal.x != 0 || contact.normal.z != 0)
+            if (collision.gameObject.CompareTag("Enemy"))
             {
-                Bounce(contact);
+                collision.gameObject.GetComponent<GoombaMachine>().RecieveDamage(1);
+            }
+            else if (collision.gameObject.CompareTag("Player"))
+            {
+                collision.gameObject.GetComponent<MarioController>().LoseHP(1, transform.forward);
+            }
+
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                ContactPoint contact = collision.GetContact(i);
+
+                if (contact.normal.x != 0 || contact.normal.z != 0)
+                {
+                    Bounce(contact);
+                }
             }
         }
+        
     }
 
     private void Bounce(ContactPoint contact)
     {
         if (numBounces > 0)
         {
-            /*     float dot = Vector3.Dot(contact.normal, (-transform.forward));
-                 dot *= 2;
-                 reflection = contact.normal * dot;
-                 reflection = reflection + transform.forward;
-                 rb.velocity = rb.transform.TransformDirection(reflection.normalized * speed);
-                 movement = rb.velocity;
-                 */
+            Vector3 vel = new Vector3(rb.velocity.normalized.x, 0, rb.velocity.normalized.z);
 
-            /*   Vector3 incomingVec = hit.point - gunObj.position;
-
-               Vector3 reflectVec = Vector3.Reflect(incomingVec, hit.normal);*/
-
-
-            rb.velocity = Vector3.Reflect(rb.velocity.normalized, contact.normal) * speed;
-            //     movement = rb.velocity;
+            rb.velocity = (Vector3.Reflect(vel, contact.normal) * speed) + new Vector3(0, rb.velocity.y, 0);
 
             numBounces -= 1;
         }

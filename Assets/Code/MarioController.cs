@@ -122,6 +122,12 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public GameObject walkParticles;
     public GameObject groundParticles;
 
+    [Header("SHELL")]
+    public Transform shellPoint;
+    public float maxDistanceToTakeShell;
+    public LayerMask shellLayer;
+    private GameObject actualShell;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -334,12 +340,52 @@ public class MarioController : MonoBehaviour, IRestartGameElement
             groundParticles.SetActive(false);
         }
 
-
-
-
         UpdateElevator();
 
         GravityUpdate();
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            GrabShell();
+        }
+        
+        
+    }
+
+    private void GrabShell()
+    {
+        if(actualShell != null)
+        {
+            actualShell.transform.parent = null;
+
+
+
+            actualShell.GetComponent<Rigidbody>().isKinematic = false;
+            actualShell.GetComponent<Rigidbody>().useGravity = true;
+
+            actualShell.GetComponent<ShellBouncing>().enabled = true;
+
+            actualShell.GetComponent<Collider>().enabled = true;
+
+            actualShell = null;
+        }
+        else
+        {
+            Collider[] coll = Physics.OverlapSphere(transform.position, maxDistanceToTakeShell, shellLayer.value);
+
+            if (coll.Length != 0)
+            {
+                actualShell = coll[0].gameObject;
+
+                actualShell.transform.parent = shellPoint;
+                actualShell.transform.position = shellPoint.position;
+
+                coll[0].enabled = false;
+                actualShell.GetComponent<Rigidbody>().isKinematic = true;
+                actualShell.GetComponent<Rigidbody>().useGravity = false;
+
+            }
+        } 
     }
 
     private void GravityUpdate()
@@ -510,6 +556,10 @@ public class MarioController : MonoBehaviour, IRestartGameElement
             hit.collider.GetComponent<GoombaMachine>().RecieveDamage(1);
             JumpOverEnemy();
         }
+        else if(hit.collider.CompareTag("Shell") && hit.normal.y > 0.1f)
+        {
+            hit.gameObject.GetComponent<ShellBouncing>().enabled = true;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -632,6 +682,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         }
         else
         {
+         
             animator.SetTrigger("Hitted_Back");
         }
     }
