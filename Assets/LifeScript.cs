@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LifeScript : MonoBehaviour
 {
-    public GameManager Manager;
+    public GameManager manager;
     private float maxHP=8;
     private void OnTriggerEnter(Collider other)
     {
@@ -12,12 +12,18 @@ public class LifeScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             
-            if(Manager.GetLife() < maxHP)
+            if(manager.GetLife() < maxHP)
             {
-                Manager.AddLife(1);
+                manager.AddLife(1);
                 Destroy(gameObject);
             }
-            
+            else
+            {
+                manager.AddCoins(20);
+                Destroy(gameObject);
+
+            }
+
         }
     }
 }

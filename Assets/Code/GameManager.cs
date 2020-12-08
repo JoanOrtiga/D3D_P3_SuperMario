@@ -16,6 +16,7 @@ public interface IHpManager
 {
     void AddLife(float f);
     float GetLife();
+    float getExtraLifes();
     void LoseLife(float f);
     event LifeChangefn m_LifeChangeFn;
 }
@@ -112,12 +113,14 @@ public class GameManager : MonoBehaviour, ICoinsManager, IHpManager
     {
         return currentHealth;
     }
-
+    public float getExtraLifes()
+    {
+        return numberOfLifes;
+    }
     public void LoseLife(float value)
     {
         currentHealth -= value;
         sounds.StarDown();
-        m_LifeChangeFn.Invoke(this);
 
         if(currentHealth <= 0)
         {
@@ -126,11 +129,14 @@ public class GameManager : MonoBehaviour, ICoinsManager, IHpManager
             if(numberOfLifes <= 0)
             {
                 gameOverNoLifesUI.SetActive(true);
+
                 return;
             }
-
+            --numberOfLifes;
             gameOverUI.SetActive(true);
         }
+        m_LifeChangeFn.Invoke(this);
+
     }
 
     public void AddCoins(int value)
