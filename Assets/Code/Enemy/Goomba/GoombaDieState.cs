@@ -15,10 +15,16 @@ public class GoombaDieState : State<GoombaMachine>
     {
         entity.timer = 0.0f;
 
+        entity.pNavMeshAgent.isStopped = true;
+
         foreach (Collider item in entity.GetComponentsInChildren<Collider>())
         {
             item.enabled = false;
         }
+
+        entity.animator.SetTrigger("Die");
+
+        Debug.Log("Hola");
     }
 
     public override void Execute(GoombaMachine entity)
@@ -31,24 +37,19 @@ public class GoombaDieState : State<GoombaMachine>
 
     public override void Exit(GoombaMachine entity)
     {
-
+        Debug.Log("Adeu");
     }
 
     private void FadeOut(GoombaMachine entity, float graphValue)
     {
-      /*  for (int i = 0; i < entity.droneRenderer.Length; i++)
+        for (int i = 0; i < entity.goombaRenderer.Length; i++)
         {
-            entity.droneRenderer[i].material.color = new Color(entity.droneRenderer[i].material.color.r, entity.droneRenderer[i].material.color.g, entity.droneRenderer[i].material.color.b, graphValue);
+            entity.goombaRenderer[i].material.color = new Color(entity.goombaRenderer[i].material.color.r, entity.goombaRenderer[i].material.color.g, entity.goombaRenderer[i].material.color.b, graphValue);
         }
 
-        if (entity.droneRenderer[0].material.color.a <= 0)
+        if (entity.goombaRenderer[0].material.color.a <= 0)
         {
-            GameObject drop = CalculateDropChance(entity);
-
-            if(drop!=null)
-                GameObject.Instantiate(drop, entity.transform.position + Vector3.down * 2.3f, new Quaternion(), GameManager.instance.destroyObjects);
-
             entity.gameObject.SetActive(false);
-        }*/
+        }
     }
 }

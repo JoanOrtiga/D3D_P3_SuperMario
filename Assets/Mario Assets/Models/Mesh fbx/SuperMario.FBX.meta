@@ -3025,7 +3025,7 @@ ModelImporter:
       lastFrame: 1660
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0
+      level: -0.12
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
@@ -3035,9 +3035,9 @@ ModelImporter:
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
@@ -3154,7 +3154,7 @@ ModelImporter:
       lastFrame: 1730
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0
+      level: -0.16
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
@@ -3164,9 +3164,9 @@ ModelImporter:
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
@@ -3806,7 +3806,7 @@ ModelImporter:
       lastFrame: 2100
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0
+      level: 1
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
@@ -4732,21 +4732,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 1
-        functionName: FinishPunch
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: fa7ad1cdd24f13549aa20e4d285ba743, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.110418096
-        functionName: Punch
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 2
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
@@ -4875,21 +4861,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 1
-        functionName: FinishPunch
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: fa7ad1cdd24f13549aa20e4d285ba743, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.092729434
-        functionName: Punch
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 3
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
@@ -6465,14 +6437,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.108051375
-        functionName: DeadSound
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: fa7ad1cdd24f13549aa20e4d285ba743, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1

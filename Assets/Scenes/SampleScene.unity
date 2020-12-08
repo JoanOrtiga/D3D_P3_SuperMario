@@ -276,17 +276,77 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 805247868}
     m_Modifications:
+    - target: {fileID: 2443220539119660716, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539119660719, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.515
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
       propertyPath: attackDamage
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
       propertyPath: coneAngle
-      value: 70
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
       propertyPath: rotationAttackLerp
       value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[1].time
+      value: 1.0040727
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[1].value
+      value: -0.0139401555
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[1].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[0].inSlope
+      value: -1.0098274
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[0].outSlope
+      value: -1.0098274
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[1].inSlope
+      value: -1.0098274
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[1].outSlope
+      value: -1.0098274
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: fadeOut.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443220539181817436, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: sightLayerMask.m_Bits
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 2443220539181817439, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
       propertyPath: m_AngularSpeed
@@ -339,6 +399,42 @@ PrefabInstance:
     - target: {fileID: 2443220539625590253, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795276646321906088, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795276646321906088, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795276646325087392, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795276646325087394, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795276646325087394, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795276646325087400, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795276646325087402, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795276646325087404, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795276646325087406, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6af8db47eaf7e534aa322ef2ef948a33, type: 3}

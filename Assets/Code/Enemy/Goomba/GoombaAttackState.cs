@@ -33,12 +33,14 @@ public class GoombaAttackState : State<GoombaMachine>
         {
             if (!entity.IsInAttackDistance())
             {
-                entity.pStateMachine.ChangeState(DroneChaseState.Instance);
+                entity.pStateMachine.ChangeState(GoombaChaseState.Instance);
             }
 
             if(entity.timer <= 0)
             {
                 entity.gameManager.LoseLife(entity.attackDamage);
+
+                entity.player.HitAnimation(entity.gameManager.GetLife(), entity.transform.forward);
                 entity.timer = entity.attackCooldown;
             }
         }

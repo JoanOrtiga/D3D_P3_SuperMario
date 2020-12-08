@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour, ICoinsManager, IHpManager
     public float maxHealth = 8;
     private float currentHealth = 0;
 
+    private MarioController marioController;
+
     private int coins = 0;
     private AnimationEvent evt;
     private void Awake()
@@ -102,12 +104,12 @@ public class GameManager : MonoBehaviour, ICoinsManager, IHpManager
     {
         return currentHealth;
     }
+
     public void LoseLife(float value)
     {
         currentHealth -= value;
         sounds.StarDown();
         m_LifeChangeFn.Invoke(this);
-
     }
 
     public void AddCoins(int value)

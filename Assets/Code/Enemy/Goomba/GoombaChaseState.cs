@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DroneChaseState : State<GoombaMachine>
+public class GoombaChaseState : State<GoombaMachine>
 {
-    public static DroneChaseState Instance { get; private set; }
+    public static GoombaChaseState Instance { get; private set; }
 
-    static DroneChaseState()
+    static GoombaChaseState()
     {
-        Instance = new DroneChaseState();
+        Instance = new GoombaChaseState();
     }
     public override void Enter(GoombaMachine entity)
     {

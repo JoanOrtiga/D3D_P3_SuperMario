@@ -35,13 +35,12 @@ public class GoombaMachine : MonoBehaviour
     public float coneAngle = 60f;
     public LayerMask sightLayerMask;
 
-    [Header("DIE")]    
+    [Header("DIE")]
     [Tooltip("y must be between 1 and 0")]
     public AnimationCurve fadeOut;
-    
+
     [HideInInspector] public Material material;
-    
-    public Renderer[] droneRenderer { get; private set; }
+    public Renderer[] goombaRenderer { get; private set; }
 
 
     [Header("REFERENCES")]
@@ -52,7 +51,7 @@ public class GoombaMachine : MonoBehaviour
     //Animation
     public Animator animator { get; private set; }
 
-        
+
     [Header("HEALTH")]
     public int maxHP = 1;
     public int currentHP { get; private set; }
@@ -60,7 +59,9 @@ public class GoombaMachine : MonoBehaviour
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        droneRenderer = GetComponentsInChildren<Renderer>();
+        goombaRenderer = GetComponentsInChildren<Renderer>(true);
+        Debug.Log(goombaRenderer.Length);
+
         animator = GetComponent<Animator>();
 
         player = FindObjectOfType<MarioController>();
@@ -72,11 +73,10 @@ public class GoombaMachine : MonoBehaviour
     {
         currentHP = maxHP;
 
-        material = new Material(droneRenderer[0].material);
+        material = new Material(goombaRenderer[0].material);
 
         stateMachine = new StateMachine<GoombaMachine>(this);
         stateMachine.ChangeState(GoombaPatrolState.Instance);
-
     }
 
     private void Update()
@@ -86,11 +86,12 @@ public class GoombaMachine : MonoBehaviour
 
     public bool SeesPlayer()
     {
-        Vector3 direction = (player.transform.position + Vector3.up * 1.5f) - eyes.position;
-        float distanceToPlayer = direction.magnitude;
-        direction /= distanceToPlayer;
+        if (player.dead)
+            return false;
 
-        bool isOnCone = Vector3.Dot(transform.forward, direction) >= Mathf.Cos(coneAngle * Mathf.Deg2Rad * 0.5f);
+        Vector3 direction = (player.transform.position + Vector3.up * 1.5f) - eyes.position;
+
+        bool isOnCone = Vector3.Angle(transform.forward, direction.normalized) < coneAngle;
 
         if (isOnCone && !Physics.Linecast(eyes.position, player.transform.position + Vector3.up * 1.5f, sightLayerMask.value))
         {
@@ -106,39 +107,36 @@ public class GoombaMachine : MonoBehaviour
         return distanceToPlayer < maxDistanceToAttack;
     }
 
- /*  public override void RestartObject()
-    {
-        base.RestartObject();
+    /*  public override void RestartObject()
+       {
+           base.RestartObject();
 
 
-        for (int i = 0; i < droneRenderer.Length; i++)
-        {
-            droneRenderer[i].material.color = new Color(droneRenderer[i].material.color.r, droneRenderer[i].material.color.g, droneRenderer[i].material.color.b, 1);
-        }
+           for (int i = 0; i < droneRenderer.Length; i++)
+           {
+               droneRenderer[i].material.color = new Color(droneRenderer[i].material.color.r, droneRenderer[i].material.color.g, droneRenderer[i].material.color.b, 1);
+           }
 
-        currentHP = maxHP;
-        HealthUpdate();
+           currentHP = maxHP;
+           HealthUpdate();
 
-        foreach (Collider item in GetComponentsInChildren<Collider>())
-        {
-            item.enabled = true;
-        }
+           foreach (Collider item in GetComponentsInChildren<Collider>())
+           {
+               item.enabled = true;
+           }
 
-        stateMachine.ChangeState(DroneIdleState.Instance);
+           stateMachine.ChangeState(DroneIdleState.Instance);
 
-    }*/
-  
+       }*/
+
     public void RecieveDamage(int damage)
     {
-  /*      currentHP -= damage;
+        currentHP -= damage;
 
         if (currentHP <= 0)
         {
-            stateMachine.ChangeState(DroneDieState.Instance);
+            stateMachine.ChangeState(GoombaDieState.Instance);
         }
-        else
-        {
-            stateMachine.ChangeState(DroneHitState.Instance);
-        }*/
+
     }
 }

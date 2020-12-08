@@ -20,6 +20,7 @@ public class GoombaPatrolState : State<GoombaMachine>
 
         MoveToNextPatrolPosition(entity);
 
+        
         entity.animator.SetTrigger("Patrol");
     }
 
@@ -36,13 +37,13 @@ public class GoombaPatrolState : State<GoombaMachine>
             if (entity.IsInAttackDistance())
                 entity.pStateMachine.ChangeState(GoombaAttackState.Instance);
             else
-                entity.pStateMachine.ChangeState(DroneChaseState.Instance);
+                entity.pStateMachine.ChangeState(GoombaChaseState.Instance);
         }
     }
 
     public override void Exit(GoombaMachine entity)
     {
-
+        entity.animator.ResetTrigger("Patrol");
     }
 
     private void MoveToNextPatrolPosition(GoombaMachine entity)

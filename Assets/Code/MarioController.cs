@@ -75,6 +75,11 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public float jumpSpeed = 10.0f;
     private bool onGround;
     public float longJumpSpeed = 4f;
+    private bool onWall;
+    private float onWallTimer = 0.0f;
+    private float onWallMaxTime = 0.1f;
+    private float wallJumpCoolDown = 0.3f;
+    private float wallJumpTimer = 0.0f;
 
     private TJumpCombo currentJump;
     private float currentJumpComboTime = 0.0f;
@@ -84,6 +89,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public bool isIdle = true;
     private float idleTimer;
     public float timeToIdle = 1.5f;
+    private Vector3 lastPosition;
 
     [Header("Sounds")]
     public AudioClip singleJumpSound;
@@ -95,6 +101,8 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public AudioClip punch2Sound;
     public AudioClip punch3Sound;
     private AudioSource sound;
+
+    public bool dead { get; private set; }
 
     //RESTART
     Vector3 startPosition;
@@ -113,12 +121,14 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
     private void Update()
     {
+        if (dead)
+            return;
 
-      /*  foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
-        {
-            if (Input.GetKeyDown(kcode))
-                Debug.Log("KeyCode down: " + kcode);
-        }*/
+        /*  foreach (KeyCode kcode in Enum.GetValues(typeof(KeyCode)))
+          {
+              if (Input.GetKeyDown(kcode))
+                  Debug.Log("KeyCode down: " + kcode);
+          }*/
 
         Vector3 right = cameraController.transform.right;
         right.y = 0.0f;
@@ -129,26 +139,32 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         speed = 0.0f;
         Vector3 movement = Vector3.zero;
 
-        float speed = 0.0f;
+        bool haveMoved = false;
+
+
         if (Input.GetKey(leftKey) || Input.GetAxisRaw("MovementJoysticX") < -0.01)
         {
             speed = walkingSpeed;
             movement = -right;
+            haveMoved = true;
         }
         if (Input.GetKey(rightKey) || Input.GetAxisRaw("MovementJoysticX") > 0.01)
         {
             speed = walkingSpeed;
             movement = right;
+            haveMoved = true;
         }
         if (Input.GetKey(upKey) || Input.GetAxisRaw("MovementJoysticY") > 0.01)
         {
             speed = walkingSpeed;
             movement = movement + forward;
+            haveMoved = true;
         }
         if (Input.GetKey(downKey) || Input.GetAxisRaw("MovementJoysticY") < -0.01)
         {
             speed = walkingSpeed;
             movement = movement - forward;
+            haveMoved = true;
         }
 
         movement.Normalize();
@@ -156,7 +172,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         if ((Input.GetKey(runKey) || Input.GetKey(runGamePad)) && speed == walkingSpeed)
             speed = runningSpeed;
 
-        if ((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && onGround && !animator.GetBool("Crouch"))
+        if ((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && (onGround && !animator.GetBool("Crouch")))
         {
             verticalSpeed = jumpSpeed;
             UpdateJumpComboState();
@@ -204,8 +220,9 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
 
 
-        if (characterController.velocity == new Vector3(0.0f, 0.0f, 0.0f))
+        if (!haveMoved)
         {
+
             idleTimer -= Time.deltaTime;
 
             if (idleTimer <= 0)
@@ -219,12 +236,40 @@ public class MarioController : MonoBehaviour, IRestartGameElement
             isIdle = false;
         }
 
-
+        lastPosition = transform.position;
 
         if ((collisionFlags & CollisionFlags.Below) != 0)
         {
             verticalSpeed = -Physics.gravity.y * Time.deltaTime;
         }
+
+        if (onWall)
+        {
+            animator.SetBool("onWall", true);
+
+            onWallTimer -= Time.deltaTime;
+
+            if ((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && wallJumpTimer <= 0.0f)
+            {
+                verticalSpeed = jumpSpeed;
+                UpdateJumpComboState();
+
+                wallJumpTimer = wallJumpCoolDown;
+            }
+        }
+
+        if (onWall && onWallTimer > 0)
+        {
+            if (!(Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)))
+                verticalSpeed = 0;
+        }
+        else if (!onWall)
+        {
+            onWallTimer = onWallMaxTime;
+            animator.SetBool("onWall", false);
+        }
+
+        wallJumpTimer -= Time.deltaTime;
 
         if (speed == 0)
             desiredRotation = transform.rotation;
@@ -247,7 +292,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     {
         onGround = (collisionFlags & CollisionFlags.CollidedBelow) != 0;
 
-        bool wallSide = (collisionFlags & CollisionFlags.CollidedSides) != 0;
+        onWall = (collisionFlags & CollisionFlags.CollidedSides) != 0;
 
         animator.SetBool("Grounded", onGround);
 
@@ -257,7 +302,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         }
     }
 
-   
+
 
     public void UpdateJumpComboTime()
     {
@@ -382,6 +427,10 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         transform.position = startPosition;
         transform.rotation = startRotation;
         characterController.enabled = true;
+
+        dead = false;
+
+        animator.SetTrigger("Restart");
     }
 
     public void SetCheckPoint(Vector3 position, Quaternion rotation)
@@ -393,6 +442,11 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public void OnControllerColliderHit(ControllerColliderHit hit)
     {
         bridge.AddForceAtPosition(-hit.normal * bridgeForce, hit.point);
+
+        if (hit.collider.CompareTag("Enemy") && hit.normal.y > 0.1f)
+        {
+            hit.collider.GetComponent<GoombaMachine>().RecieveDamage(1);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -435,7 +489,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
     private void Step(int side)
     {
-        if (speed>0.0f)
+        if (speed > 0.0f)
         {
             switch (side)
             {
@@ -497,4 +551,25 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         }
     }
 
+    public void HitAnimation(float currentHealth, Vector3 forward)
+    {
+        if (currentHealth <= 0)
+        {
+            animator.SetTrigger("Die");
+            characterController.enabled = false;
+            dead = true;
+            return;
+        }
+
+        if (Vector3.Angle(forward, transform.forward) <= 90)
+        {
+            animator.SetTrigger("Hitted_Front");
+        }
+        else
+        {
+            animator.SetTrigger("Hitted_Back");
+        }
+
+
+    }
 }
