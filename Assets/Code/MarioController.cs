@@ -592,4 +592,6 @@ public class MarioController : MonoBehaviour, IRestartGameElement
             animator.SetTrigger("Hitted_Back");
         }
     }
+
+    
 }

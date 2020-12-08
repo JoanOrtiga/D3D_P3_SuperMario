@@ -153,4 +153,11 @@ public class GoombaMachine : MonoBehaviour , IRestartGameElement
         }
 
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            RecieveDamage(1);
+        }
+    }
 }
