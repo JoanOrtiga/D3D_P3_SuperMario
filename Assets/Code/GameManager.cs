@@ -37,10 +37,18 @@ public class GameManager : MonoBehaviour, ICoinsManager, IHpManager
 
     private int coins = 0;
     private AnimationEvent evt;
+
+    public GameObject gameOverUI;
+    public GameObject gameOverNoLifesUI;
+
+    private int numberOfLifes = 3;
+
     private void Awake()
     {
         DependencyInjector.AddDependency<IHpManager>(this);
         DependencyInjector.AddDependency<ICoinsManager>(this);
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
     void Start()
     {
@@ -110,6 +118,19 @@ public class GameManager : MonoBehaviour, ICoinsManager, IHpManager
         currentHealth -= value;
         sounds.StarDown();
         m_LifeChangeFn.Invoke(this);
+
+        if(currentHealth <= 0)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+
+            if(numberOfLifes <= 0)
+            {
+                gameOverNoLifesUI.SetActive(true);
+                return;
+            }
+
+            gameOverUI.SetActive(true);
+        }
     }
 
     public void AddCoins(int value)
@@ -121,6 +142,22 @@ public class GameManager : MonoBehaviour, ICoinsManager, IHpManager
     public int GetCoins()
     {
         return coins;
+    }
+
+    public void ReturnToMenuButton()
+    {
+        gameOverNoLifesUI.SetActive(false);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
+    public void RestartSceneButton()
+    {
+        gameOverUI.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        RestartGame();
+
     }
 }
 

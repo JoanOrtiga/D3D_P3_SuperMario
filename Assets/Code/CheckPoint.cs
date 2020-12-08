@@ -11,6 +11,8 @@ public class CheckPoint : MonoBehaviour
         if(other.tag == "Player")
         {
             other.GetComponent<MarioController>().SetCheckPoint(startPosition.position, startPosition.rotation);
+
+            gameObject.SetActive(false);
         }
     }
 }

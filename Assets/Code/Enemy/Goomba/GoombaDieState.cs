@@ -23,8 +23,6 @@ public class GoombaDieState : State<GoombaMachine>
         }
 
         entity.animator.SetTrigger("Die");
-
-        Debug.Log("Hola");
     }
 
     public override void Execute(GoombaMachine entity)

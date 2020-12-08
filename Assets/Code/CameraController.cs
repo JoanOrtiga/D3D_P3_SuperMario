@@ -35,9 +35,11 @@ public class CameraController : MonoBehaviour , IRestartGameElement
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+
 
         marioController = lookAtPlayer.GetComponentInParent<MarioController>();
+
+        SetRestartPoint();
     }
 
     private void Update()

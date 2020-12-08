@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class GoombaMachine : MonoBehaviour
+public class GoombaMachine : MonoBehaviour , IRestartGameElement
 {
     private StateMachine<GoombaMachine> stateMachine;
     public StateMachine<GoombaMachine> pStateMachine
@@ -56,21 +56,27 @@ public class GoombaMachine : MonoBehaviour
     public int maxHP = 1;
     public int currentHP { get; private set; }
 
+
+    private Vector3 startPosition;
+    private Quaternion startRotation;
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         goombaRenderer = GetComponentsInChildren<Renderer>(true);
-        Debug.Log(goombaRenderer.Length);
 
         animator = GetComponent<Animator>();
 
         player = FindObjectOfType<MarioController>();
 
         gameManager = FindObjectOfType<GameManager>();
+
     }
 
     private void Start()
     {
+        SetRestartPoint();
+
         currentHP = maxHP;
 
         material = new Material(goombaRenderer[0].material);
@@ -107,27 +113,35 @@ public class GoombaMachine : MonoBehaviour
         return distanceToPlayer < maxDistanceToAttack;
     }
 
-    /*  public override void RestartObject()
-       {
-           base.RestartObject();
+    public void SetRestartPoint()
+    {
+        GameObject.FindObjectOfType<GameManager>().AddRestartGameElement(this);
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+    }
 
+    public void Restart()
+    {
+        transform.position = startPosition;
+        transform.rotation = startRotation;
+        currentHP = maxHP;
 
-           for (int i = 0; i < droneRenderer.Length; i++)
-           {
-               droneRenderer[i].material.color = new Color(droneRenderer[i].material.color.r, droneRenderer[i].material.color.g, droneRenderer[i].material.color.b, 1);
-           }
+        for (int i = 0; i < goombaRenderer.Length; i++)
+        {
+            goombaRenderer[i].material.color = new Color(goombaRenderer[i].material.color.r, goombaRenderer[i].material.color.g, goombaRenderer[i].material.color.b, 1);
+        }
 
-           currentHP = maxHP;
-           HealthUpdate();
+        foreach (Collider item in GetComponentsInChildren<Collider>())
+        {
+            item.enabled = true;
+        }
 
-           foreach (Collider item in GetComponentsInChildren<Collider>())
-           {
-               item.enabled = true;
-           }
+        gameObject.SetActive(true);
 
-           stateMachine.ChangeState(DroneIdleState.Instance);
+        currentWaypointID = 0;
 
-       }*/
+        stateMachine.ChangeState(GoombaPatrolState.Instance);
+    }
 
     public void RecieveDamage(int damage)
     {

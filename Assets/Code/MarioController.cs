@@ -57,6 +57,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public float runningSpeed = 1f;
     public float crouchingSpeed = 0.2f;
     private float speed = 0.0f;
+
     [Header("Punch")]
     public GameObject leftPunchCollider;
     public GameObject rightPunchCollider;
@@ -85,7 +86,9 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     private float currentJumpComboTime = 0.0f;
     public float jumpComboTime = 1f;
 
+    private bool onEnemy = false;
 
+    [Header("IDLE")]
     public bool isIdle = true;
     private float idleTimer;
     public float timeToIdle = 1.5f;
@@ -108,6 +111,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     Vector3 startPosition;
     Quaternion startRotation;
 
+    [Header("BRIDGE")]
     public int bridgeForce;
     public Rigidbody bridge;
 
@@ -172,8 +176,10 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         if ((Input.GetKey(runKey) || Input.GetKey(runGamePad)) && speed == walkingSpeed)
             speed = runningSpeed;
 
-        if ((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && (onGround && !animator.GetBool("Crouch")))
+        if (((Input.GetKey(jumpKey) || Input.GetKey(jumpGamePad)) && (onGround && !animator.GetBool("Crouch"))) || onEnemy)
         {
+            onEnemy = false;
+
             verticalSpeed = jumpSpeed;
             UpdateJumpComboState();
         }
@@ -222,7 +228,6 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
         if (!haveMoved)
         {
-
             idleTimer -= Time.deltaTime;
 
             if (idleTimer <= 0)
@@ -410,7 +415,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
 
     public void JumpOverEnemy()
     {
-        verticalSpeed = jumpSpeedOnKillEnemy;
+        onEnemy = true;
     }
 
     public void SetRestartPoint()
@@ -446,6 +451,7 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         if (hit.collider.CompareTag("Enemy") && hit.normal.y > 0.1f)
         {
             hit.collider.GetComponent<GoombaMachine>().RecieveDamage(1);
+            JumpOverEnemy();
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -569,7 +575,5 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         {
             animator.SetTrigger("Hitted_Back");
         }
-
-
     }
 }
