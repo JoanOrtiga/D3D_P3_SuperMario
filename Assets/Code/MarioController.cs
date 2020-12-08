@@ -116,6 +116,11 @@ public class MarioController : MonoBehaviour, IRestartGameElement
     public int bridgeForce;
     public Rigidbody bridge;
 
+    [Header("Particulas")]
+    public GameObject runParticles;
+    public GameObject walkParticles;
+    public GameObject groundParticles;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -301,8 +306,33 @@ public class MarioController : MonoBehaviour, IRestartGameElement
             if(fallingTimer<= 0.0f)
             {
                 animator.SetTrigger("Falling");
+                runParticles.SetActive(false);
+                walkParticles.SetActive(false);
+                groundParticles.SetActive(false);
+
             }
         }
+        if (speed == runningSpeed && fallingTimer>0)
+        {
+            runParticles.SetActive(true);
+            walkParticles.SetActive(false);
+            groundParticles.SetActive(false);
+        }
+        if(speed== walkingSpeed && fallingTimer > 0)
+        {
+            runParticles.SetActive(false);
+            walkParticles.SetActive(true);
+            groundParticles.SetActive(false);
+        }
+        if(speed==0 && fallingTimer > 0)
+        {
+            runParticles.SetActive(false);
+            walkParticles.SetActive(false);
+            groundParticles.SetActive(false);
+        }
+
+
+
 
         UpdateElevator();
 
@@ -323,7 +353,12 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         }
     }
 
-
+    public void LaLaLand()
+    {
+        runParticles.SetActive(false);
+        walkParticles.SetActive(false);
+        groundParticles.SetActive(true);
+    }
 
     public void UpdateJumpComboTime()
     {
@@ -361,6 +396,9 @@ public class MarioController : MonoBehaviour, IRestartGameElement
         }
 
         animator.SetTrigger("Jump");
+        runParticles.SetActive(false);
+        walkParticles.SetActive(false);
+        groundParticles.SetActive(false);
         animator.SetInteger("JumpState", (int)currentJump);
     }
 
