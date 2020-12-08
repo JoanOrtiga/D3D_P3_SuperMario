@@ -9,6 +9,7 @@ public class HUD : MonoBehaviour
     public Text coinsText;
     public Image LifeBar;
     public GameManager Manager;
+    public Text ExtraLifes;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,8 @@ public class HUD : MonoBehaviour
     }
     void UpdateHp(IHpManager hpManager)
     {
-      
+
+            ExtraLifes.text = hpManager.getExtraLifes().ToString();
             float Pct = Manager.GetLife() / 8.0f;
             LifeBar.fillAmount = Pct;
             if (Manager.GetLife() <= 2)
